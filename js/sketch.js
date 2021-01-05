@@ -47,7 +47,7 @@ function setup(){
 
 function draw(){
   
-  if(cnt < 1000){
+  if(cnt < a.length){
     background(51);
     for(let i = 0; i < 100; i++){
       card[i].show();
@@ -72,9 +72,18 @@ function Deck(){
   this.rh = 20;
 
   this.top = 99;
+  
+  this.stk = [];
 
   this.update = function(num){
     this.top = num;
+    this.stk.push(num);
+  }
+
+  this.draw = function(){
+    var res = this.stk.pop();
+    this.top = res;
+    return res;
   }
 
   this.show = function(){
@@ -141,8 +150,9 @@ function Snake(){
       }      
     }
     if(op == 'O'){
-      card[deck.top].x = this.x/scl;
-      card[deck.top].y = this.y/scl;
+      let topcard = deck.draw();
+      card[topcard].x = this.x/scl;
+      card[topcard].y = this.y/scl;
     }
 
     
