@@ -24,24 +24,23 @@ function setup(){
   slider2 = createSlider(0, TWO_PI, PI/6, 0.01);
   button_output = createButton("output file");
   button_input = createButton("input file");
-  createCanvas(400,400);
+  createCanvas(600,400);
+
   var w = 400;
   var h = 400;
   cols = w/scl;
   rows = h/scl;
   field = new Field();
   s = new Snake();
+  deck = new Deck();
 
   for(let i = 0; i < 100; i++){
     card[i] = new Card();
-    x = cardPositions[i*2];
-    y = cardPositions[i*2+1];
-    --x;
-    --y;
-
+    y = cardPositions[i*2];
+    x = cardPositions[i*2+1];
     card[i].set(x,y,i);
   }
-  frameRate(30);
+  frameRate(50);
   background(51);
 }
 
@@ -57,21 +56,36 @@ function draw(){
     field.show();
     s.update(a[cnt]);
     s.show();
+    deck.show();
+
 
   }
   cnt++;
 }
 //
 
+function Deck(){
+  this.x = 420;
+  this.y = 20;
+
+  this.rw = 80;
+  this.rh = 20;
+
+  this.top = 99;
+
+  this.update = function(num){
+    this.top = num;
+  }
+
+  this.show = function(){
+    stroke(255);
+    noFill();
+    text(' deck : ' + this.top, this.x, this.y);
+    rect(this.x, this.y - this.rh*3/4, this.rw, this.rh);
+  }
+}
+
 function Field(){
-
-  this.set = function(){
-
-  }
-
-  this.update = function(){
-
-  }
 
   this.show = function(){
     for(var y = 0; y < rows; y++){
@@ -116,8 +130,20 @@ function Snake(){
     if(op == 'L') this.x -= scl;
     if(op == 'U') this.y -= scl;
     if(op == 'D') this.y += scl;
-    if(op == 'I') console.log(op);
-    if(op == 'O') console.log(op);
+    if(op == 'I') {
+      for(let j = 0; j < 100; j++){
+        if(card[j].x == this.x/scl && card[j].y == this.y/scl){
+          deck.update(card[j].num);
+          card[j].x = 500;
+          card[j].y = 0;
+          break;
+        }
+      }      
+    }
+    if(op == 'O'){
+      card[deck.top].x = this.x/scl;
+      card[deck.top].y = this.y/scl;
+    }
 
     
     //ERROR
