@@ -35,11 +35,13 @@ function setup(){
   for(let i = 0; i < 100; i++){
     card[i] = new Card();
     x = cardPositions[i*2];
-    y = cardPositions[(i+1)*2];
+    y = cardPositions[i*2+1];
+    --x;
+    --y;
 
     card[i].set(x,y,i);
   }
-  frameRate(30);
+  frameRate(50);
   background(51);
 }
 
@@ -84,9 +86,9 @@ function Field(){
 
 //card class
 function Card(){
-  this.x = int(random(20));
-  this.y = int(random(20));
-  this.num = int(random(1,100));
+  this.x; 
+  this.y;
+  this.num;
 
   this.set = function(x, y, n){
     this.x = x;
