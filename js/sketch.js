@@ -13,8 +13,6 @@ let button;
 var cols, rows;
 var scl = 20;
 
-
-
 var cnt = 0;
 
 card = [];
@@ -46,21 +44,24 @@ function setup(){
 
 
 function draw(){
-  
-  if(cnt < a.length){
-    background(51);
-    for(let i = 0; i < 100; i++){
-      card[i].show();
-    }
-    //card[0].show();
-    field.show();
-    s.update(a[cnt]);
-    s.show();
-    deck.show();
 
-
+  background(51);
+  for(let i = 0; i < 100; i++){
+    card[i].show();
   }
+  field.show();
+  s.update(a[cnt]);
+  s.show();
+  deck.show();
+  stroke(200);
+  text('score: ' + a.length, 400, 100)
+  
   cnt++;
+  if(cnt >= a.length){
+    stroke(200);
+    text('end of process' , 400, 200)
+    noLoop();
+  }
 }
 //
 
@@ -72,14 +73,15 @@ function Deck(){
   this.rh = 20;
 
   this.top = 99;
-  
   this.stk = [];
 
-  this.update = function(num){
+  //deckに加える
+  this.add = function(num){
     this.top = num;
     this.stk.push(num);
   }
 
+  //deckを引く
   this.draw = function(){
     var res = this.stk.pop();
     this.top = res;
@@ -142,7 +144,7 @@ function Snake(){
     if(op == 'I') {
       for(let j = 0; j < 100; j++){
         if(card[j].x == this.x/scl && card[j].y == this.y/scl){
-          deck.update(card[j].num);
+          deck.add(card[j].num);
           card[j].x = 500;
           card[j].y = 0;
           break;
@@ -154,8 +156,6 @@ function Snake(){
       card[topcard].x = this.x/scl;
       card[topcard].y = this.y/scl;
     }
-
-    
     //ERROR
   }
 
@@ -163,5 +163,4 @@ function Snake(){
     fill(255,0,0);
     rect(this.x, this.y, scl, scl);
   }
-  
 }
