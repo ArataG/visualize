@@ -18,7 +18,7 @@ var cnt = 0;
 card = [];
 
 function setup(){
-  slider = createSlider(0, TWO_PI, PI/6, 0.01);
+  slider_speed = createSlider(0, 100, 50, 1);
   slider2 = createSlider(0, TWO_PI, PI/6, 0.01);
   button_output = createButton("output file");
   button_input = createButton("input file");
@@ -29,7 +29,7 @@ function setup(){
   cols = w/scl;
   rows = h/scl;
   field = new Field();
-  s = new Snake();
+  player = new Player();
   deck = new Deck();
 
   for(let i = 0; i < 100; i++){
@@ -38,28 +38,31 @@ function setup(){
     x = cardPositions[i*2+1];
     card[i].set(x,y,i);
   }
-  frameRate(50);
+  //frameRate(50);
   background(51);
 }
 
 
 function draw(){
+  
+  frameRate(slider_speed.value()); //sliderで, 描画速度を指定.
 
   background(51);
+  
+  field.show();
   for(let i = 0; i < 100; i++){
     card[i].show();
   }
-  field.show();
-  s.update(a[cnt]);
-  s.show();
+  player.update(a[cnt]);
+  player.show();
   deck.show();
-  stroke(200);
-  text('score: ' + a.length, 400, 100)
+  stroke(255);
+  text('score: ' + a.length, 420, 100)
   
   cnt++;
   if(cnt >= a.length){
-    stroke(200);
-    text('end of process' , 400, 200)
+    stroke(255);
+    text('end of process' , 420, 200)
     noLoop();
   }
 }
@@ -132,7 +135,7 @@ function Card(){
 
 //
 
-function Snake(){
+function Player(){
   this.x = 0;
   this.y = 0;
 
