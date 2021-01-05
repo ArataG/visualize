@@ -18,8 +18,8 @@ var cnt = 0;
 card = [];
 
 function setup(){
-  slider_speed = createSlider(0, 100, 50, 1);
-  slider2 = createSlider(0, TWO_PI, PI/6, 0.01);
+  slider_speed = createSlider(1, 60, 50, 1);
+  //slider2 = createSlider(0, TWO_PI, PI/6, 0.01);
   button_output = createButton("output file");
   button_input = createButton("input file");
   createCanvas(600,400);
@@ -56,9 +56,11 @@ function draw(){
   player.update(a[cnt]);
   player.show();
   deck.show();
+
+  stroke(255);
+  deck.show2();
   stroke(255);
   text('score: ' + a.length, 420, 100)
-  
   cnt++;
   if(cnt >= a.length){
     stroke(255);
@@ -96,6 +98,28 @@ function Deck(){
     noFill();
     text(' deck : ' + this.top, this.x, this.y);
     rect(this.x, this.y - this.rh*3/4, this.rw, this.rh);
+  }
+
+  this.show2 = function(){
+    for(var y = 0; y < 10; y++){
+      for(var x = 0; x < 10; x++){
+        stroke(0,200,200);
+        noFill();
+        rect(x*scl + 400 , y*scl + 200, scl, scl);
+      }
+    }
+    //
+    for(var y = 0; y < 10; y++){
+      for(var x = 0; x < 10; x++){
+        //
+        if(x + y * 10 > this.stk.length) break;
+        fill(180);
+        stroke(255);
+        rect(x*scl+ 400, y*scl+ 200, scl, scl);
+        fill(0,0,200);
+        text(this.stk[x + y * 10], x * scl + 400, y*scl+scl*3/4 + 200);
+      }
+    }
   }
 }
 
