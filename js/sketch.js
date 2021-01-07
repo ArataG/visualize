@@ -61,6 +61,8 @@ function draw(){
   deck.show2();
   stroke(255);
   text('SCORE: ' + a.length, 550, 20);
+  
+ 
 
   cnt++;
   if(cnt >= a.length){
@@ -72,4 +74,7 @@ function draw(){
     stroke(0,200,0);
     text('Running...' , 420, 20);
   }
+   //field pos(後で分離する)
+   stroke(0,200,200)
+   text(int(mouseX/scl)+1 + ", " + int(mouseY/scl)+1 ,mouseX, mouseY);
 }
